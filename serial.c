@@ -1,16 +1,16 @@
 #include "serial.h"
 
 
-int init_tty()
+int init_tty()//è¿”å›æ–‡ä»¶æè¿°ç¬¦
 {
 	char *device1 = calloc(1, 32);
 	char *device2 = calloc(1, 32);
-	strcpy(device1, "/dev/ttySAC1");//´®¿Ú1
-	strcpy(device2, "/dev/ttySAC2");//´®¿Ú2
+	strcpy(device1, "/dev/ttySAC1");//ä¸²å£1
+	strcpy(device2, "/dev/ttySAC2");//ä¸²å£2
 	
 	
 	
-	int fd = open(device1, O_RDWR|O_NOCTTY);//´ò¿ª´®¿ÚÎÄ¼ş
+	int fd = open(device1, O_RDWR|O_NOCTTY);//æ‰“å¼€ä¸²å£æ–‡ä»¶
 	if(fd == -1)
 	{
 		fprintf(stderr, "open() %s failed: %s\n",
@@ -20,7 +20,7 @@ int init_tty()
 	
 	
 	
-	//´®¿Ú³õÊ¼»¯
+	//ä¸²å£åˆå§‹åŒ–
 	struct termios new_cfg, old_cfg;
 	if(tcgetattr(fd, &old_cfg) != 0)
 	{
@@ -33,8 +33,8 @@ int init_tty()
 	new_cfg = old_cfg;
 	cfmakeraw(&new_cfg);
 
-	cfsetispeed(&new_cfg, B115200);//½ÓÊÕ²¨ÌØÂÊ
-	cfsetospeed(&new_cfg, B115200);//·¢ËÍ²¨ÌØÂÊ
+	cfsetispeed(&new_cfg, B115200);//æ¥æ”¶æ³¢ç‰¹ç‡
+	cfsetospeed(&new_cfg, B115200);//å‘é€æ³¢ç‰¹ç‡
 
 	new_cfg.c_cflag |= CLOCAL | CREAD;
 
